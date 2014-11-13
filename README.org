@@ -1,0 +1,56 @@
+* Viewers
+A viewer is something that can display a given page in a document.
+This is the minimal requirement for something to be usable as a
+viewer by =pdfc.el=.  In order to support extra features a viewer
+may offer further functionality to =pdfc.el=.  Each viewer is
+configured as an element in the alist =pdfc-viewers=.  Each such
+element is in turn a plist with =:name= and =:display= as mandatory
+keywords.  All keywords are listed below.
+
+- =:name= 
+  The name of the viewer.  Must be unique under all viewers in
+  =pdfc-viewers=.  This is also used in the user interface.
+- =:display=
+  A command that displays a given page in a given document.
+- =:page=
+  A command returning the page currently displayed by the viewer.
+- =:max-pages=
+  A command returning the total number of pages of the currently
+  displayed document.
+- =:zoom-in=
+  A command that zooms into the given document.
+- =:zoom-out=
+  A command that zooms out of the given document.
+
+A command is either a string or an elisp function.  For a more
+detailed documentation see the doc string of =pdfc-viewers=.
+
+* Backends
+A backend is a set of elisp functions that implement the actual note
+taking behaviour.  A new backend can be defined with the function
+=pdfc-define-backend=.  Said function takes several keywords that are
+listed below.  Mandatory are marked with an asterisk.
+
+- =:name=
+  The name of the backend.  There can only ever be one backend
+  associated with each possible name.  If there a multiple backend
+  definitions with the same name, the newset one takes precedence.
+- =:format-page=
+  A function that returns a string representing the page number to be
+  inserted at point.
+- =:extract-page=
+  A function extracting the page the note at point refers to.
+- =:separator=
+  Either a string or a function returning a string representing the
+  separator between the page number and the actual note.
+- =:new-note=
+  Either a string, a function returning a string or a function
+  returning =nil=.  The first two are used to denote the beginning of
+  a new note. The third is responsible for inserting said beginning by
+  itself.
+- =:file-name=
+  A function returning the file name of the document the notes around
+  point refer to.
+=:mode=
+  A symbol representing a major mode. if pdfc-mode is enabled in a
+  buffer with that major mode, this backend is made current.
