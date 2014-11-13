@@ -32,6 +32,7 @@
 ;;; Code:
 
 (require 's)
+(require 'cl)
 
 (defvar pdfc--current-backend nil
   "The backend currently active.")
