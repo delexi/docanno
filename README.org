@@ -27,12 +27,13 @@ property that causes it to be automatically activated in the given
 modes.
 * Viewers
 A viewer is something that can display a given page in a document.
-This is the minimal requirement for something to be usable as a
-viewer by =pdfc.el=.  In order to support extra features a viewer
-may offer further functionality to =pdfc.el=.  Each viewer is
-configured as an element in the alist =pdfc-viewers=.  Each such
-element is in turn a plist with =:name= and =:display= as mandatory
-keywords.  All keywords are listed below.
+This is the minimal requirement for something to be usable as a viewer
+by =pdfc.el=.  In order to support extra features a viewer may offer
+further functionality to =pdfc.el=.
+
+Each viewer is configured as an element in the plist =pdfc-viewers=,
+keyed by its name.  Each such element is in turn a plist with =:name=
+and =:display= as mandatory keywords.  All keywords are listed below.
 
 - =:name= 
   The name of the viewer.  Must be unique under all viewers in
@@ -50,7 +51,7 @@ keywords.  All keywords are listed below.
   A command that zooms out of the given document.
 
 A command is either a string or an elisp function.  For a more
-detailed documentation see the doc string of =pdfc-viewers=.
+detailed documentation see the doc string of =pdfc-define-viewer=.
 
 * Backends
   :PROPERTIES:
@@ -59,7 +60,7 @@ detailed documentation see the doc string of =pdfc-viewers=.
 A backend is a set of elisp functions that implement the actual note
 taking behaviour.  A new backend can be defined with the function
 =pdfc-define-backend=.  Said function takes several keywords that are
-listed below.  Mandatory are marked with an asterisk.
+listed below.  Mandatory keywords are marked with an asterisk.
 
 - =:name=
   The name of the backend.  There can only ever be one backend
@@ -81,6 +82,6 @@ listed below.  Mandatory are marked with an asterisk.
 - =:file-name=
   A function returning the file name of the document the notes around
   point refer to.
-=:mode=
-  A symbol representing a major mode. if pdfc-mode is enabled in a
-  buffer with that major mode, this backend is made current.
+- =:mode=
+  A list of one or more major modes this backend is activated
+  automatically.
