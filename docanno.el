@@ -70,6 +70,7 @@
 
 (defvar docanno--page-num-hash nil)
 
+;;;###autoload
 (define-minor-mode docanno-mode "Control pdf programs from within emacs."
   nil "Docanno" docanno-mode-map
   (if docanno-mode
@@ -122,6 +123,7 @@ If no viewer has been activated yet, throw a user-error."
 (defvar docanno-viewer-hook nil
   "This hook is run after changing the current viewer.")
 
+;;;###autoload
 (defun docanno-set-viewer (viewer)
   "Make VIEWER the current viewer.
 
@@ -133,6 +135,7 @@ viewers is available."
   (setq docanno--current-viewer viewer)
   (run-hooks 'docanno-viewer-hook))
 
+;;;###autoload
 (defun docanno-set-backend (backend)
   "Make BACKEND the current backend.
 
@@ -144,6 +147,7 @@ backends is available."
   (setq docanno--current-backend backend)
   (run-hooks 'docanno-backend-hook))
 
+;;;###autoload
 (defun docanno-set-file-name (file &optional no-guess)
   "Make FILE the current file.
 
@@ -188,6 +192,7 @@ Does nothing if `docanno-auto-update-file-path' is nil."
         ((not (file-exists-p docanno--current-file-name))
          (user-error "\"%s\" does not exist" docanno--current-file-name))))
 
+;;;###autoload
 (defun docanno-display-pdf (&optional page)
   "Display the current document at PAGE."
   (interactive "p")
@@ -211,6 +216,7 @@ Does nothing if `docanno-auto-update-file-path' is nil."
                    ("%p" . ,(int-to-string page)))
                  command))
 
+;;;###autoload
 (defun docanno-previous-page (&optional count)
   "Display previous page of current document.
 
@@ -219,6 +225,7 @@ If COUNT is given, go back COUNT pages."
   (docanno--maybe-change-file-name)
   (docanno-display-pdf (- docanno--current-page-num (or count 1))))
 
+;;;###autoload
 (defun docanno-next-page (&optional count)
   "Display next page of current document.
 
@@ -227,11 +234,13 @@ If COUNT is given, go forward COUNT pages."
   (docanno--maybe-change-file-name)
   (docanno-display-pdf (+ docanno--current-page-num (or count 1))))
 
+;;;###autoload
 (defun docanno-insert-page ()
   "Insert the current page at point."
   (interactive)
   (insert (funcall (docanno-backend-get :format-page) docanno--current-page-num)))
 
+;;;###autoload
 (defun docanno-insert-note ()
   "Insert a new note at point."
   (interactive)
@@ -244,6 +253,7 @@ If COUNT is given, go forward COUNT pages."
                (insert ret))))
           (t (error ":new-note must either be a string or a function")))))
 
+;;;###autoload
 (defun docanno-insert-note-and-page ()
   "Insert a new note and the current page at point."
   (interactive)
