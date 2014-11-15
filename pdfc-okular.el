@@ -5,6 +5,7 @@
 ;; Author: Alexander Baier <alexander.baier@mailbox.org>
 ;; Keywords: convenience
 ;; Version: 0.0.1
+;; Package-Requires: (("pdfc" 0.0.3))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -22,6 +23,8 @@
 ;; along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Code:
+
+(require 'pdfc)
 
 (pdfc-define-viewer "okular"
   :display "/usr/bin/okular --noraise --unique -p %p %f")

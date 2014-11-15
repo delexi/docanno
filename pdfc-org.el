@@ -5,7 +5,7 @@
 ;; Author: Alexander Baier <alexander.baier@mailbox.org>
 ;; Keywords: convenience
 ;; Version: 0.0.1
-;; Package-Requires: ((s "1.9.0"))
+;; Package-Requires: (("pdfc" 0.0.3))
 
 ;; This file is NOT part of GNU Emacs.
 
