@@ -1,11 +1,11 @@
-;;; pdfc-okular.el --- pdfc backend for okular.
+;;; docanno-evince.el --- docanno backend for evince.
 
 ;; Copyright (C) 2014 Alexander Baier
 
 ;; Author: Alexander Baier <alexander.baier@mailbox.org>
 ;; Keywords: convenience
 ;; Version: 0.0.1
-;; Package-Requires: (("pdfc" 0.0.3))
+;; Package-Requires: (("docanno" 0.0.3))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -24,11 +24,10 @@
 
 ;;; Code:
 
-(require 'pdfc)
+(require 'docanno)
 
-(pdfc-define-viewer "okular"
-  :display "/usr/bin/okular --noraise --unique -p %p %f")
+(docanno-define-viewer "evince"
+  :display "/usr/bin/evince -i %p %f")
 
-(provide 'pdfc-okular)
-
-;;; pdfc-okular ends here.
+(provide 'docanno-evince)
+;;; docanno-evince.el ends here.

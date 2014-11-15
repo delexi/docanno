@@ -1,11 +1,11 @@
-;;; pdfc-org.el --- Org mode backend for pdfc.
+;;; docanno-org.el --- Org mode backend for docanno.
 
 ;; Copyright (C) 2014 Alexander Baier
 
 ;; Author: Alexander Baier <alexander.baier@mailbox.org>
 ;; Keywords: convenience
 ;; Version: 0.0.1
-;; Package-Requires: (("pdfc" 0.0.3))
+;; Package-Requires: (("docanno" 0.0.3))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -25,9 +25,9 @@
 ;;; Code:
 
 
-(require 'pdfc)
+(require 'docanno)
 
-(defvar pdfc-org-page-note-separators '((headline . ": ")
+(defvar docanno-org-page-note-separators '((headline . ": ")
                                         (item . " :: "))
   "The strings used to separate the page number and the note.
 
@@ -37,9 +37,9 @@ headline or an item in a list.
 SEPARATOR is the string used to separate the page number and the
 following note.")
 
-(defvar pdfc-org-doc-property "PDFC_FILE")
+(defvar docanno-org-doc-property "DOCANNO_FILE")
 
-(defun pdfc-org-extract-page ()
+(defun docanno-org-extract-page ()
   (save-excursion
     (let ((eol (progn (end-of-line) (point)))
           (page-rx (rx-to-string
@@ -50,36 +50,36 @@ following note.")
       (when (re-search-forward page-rx eol t)
         (match-string 1)))))
 
-(defun pdfc-org-get-separator ()
+(defun docanno-org-get-separator ()
   (save-excursion
     (beginning-of-line)
     (cond ((looking-at org-heading-regexp)
-           (cdr (assoc 'headline pdfc-org-page-note-separators)))
+           (cdr (assoc 'headline docanno-org-page-note-separators)))
           ((looking-at (org-item-re))
-           (cdr (assoc 'item pdfc-org-page-note-separators)))
+           (cdr (assoc 'item docanno-org-page-note-separators)))
           (t ""))))
 
-(defun pdfc-org-insert-heading (&optional arg invisible-ok)
+(defun docanno-org-insert-heading (&optional arg invisible-ok)
   (interactive "P")
   (org-insert-heading arg invisible-ok)
   (when (looking-at " :: ")
     (delete-char 4))
   nil)
 
-(defun pdfc-org-guess-file-paths ()
-  (let ((files (org-entry-get (point) pdfc-org-doc-property 'selective)))
+(defun docanno-org-guess-file-paths ()
+  (let ((files (org-entry-get (point) docanno-org-doc-property 'selective)))
     (if (and files (string-match "\\S-" files))
         (car (read-from-string (concat "(" files ")")))
       '(""))))
 
-(pdfc-define-backend "org-mode"
+(docanno-define-backend "org-mode"
   :format-page #'int-to-string
-  :extract-page #'pdfc-org-extract-page
-  :separator #'pdfc-org-get-separator
-  :new-note #'pdfc-org-insert-heading
-  :file-name #'pdfc-org-guess-file-paths
+  :extract-page #'docanno-org-extract-page
+  :separator #'docanno-org-get-separator
+  :new-note #'docanno-org-insert-heading
+  :file-name #'docanno-org-guess-file-paths
   :mode '(org-mode))
 
-(provide 'pdfc-org)
+(provide 'docanno-org)
 
-;;; pdfc.el ends here
+;;; docanno.el ends here

@@ -1,0 +1,63 @@
+#+LAST_MOBILE_CHANGE: 2014-11-15 11:59:30
+* Aufgaben
+** TODO Autoloads implementieren                                       :code:
+   :PROPERTIES:
+   :ID:       ef386a6b-72ad-4757-b836-71f6b25ae2a9
+   :END:
+** TODO Projekt auf github hochladen
+   :PROPERTIES:
+   :ID:       2709f75e-dd6a-4bf8-b449-e2b855931cba
+   :END:
+** TODO Contribute schreiben README                                     :doc:
+   :PROPERTIES:
+   :ID:       cd6ff5eb-1e76-405c-867a-fb2a7b51b236
+   :END:
+** TODO project nach docanno umbenennen                            :code:doc:
+   :PROPERTIES:
+   :ID:       06a68a92-0b49-4f12-a3cd-5934c5afa1e8
+   :END:
+** TODO auf customize umsteigen                                        :code:
+   :PROPERTIES:
+   :ID:       cb447ff7-d40a-4e95-9175-9764ded418df
+   :END:
+** Archive                                                          :ARCHIVE:
+*** DONE LICENSE Datei erstellen
+    :PROPERTIES:
+    :ID:       65c0dfb1-92f3-4ec0-887d-5dd804a91006
+    :ARCHIVE_TIME: 2014-11-14 Fri 22:33
+    :END:
+- GPL v3
+*** NOT License header aus den .el-Dateien entfernen
+   :PROPERTIES:
+   :ID:       9275be90-a93a-4ff2-ba5e-6eff369730bc
+   :ARCHIVE_TIME: 2014-11-14 Fri 22:33
+   :END:
+- habe sie doch drin gelassen, da sie parallel zu der LICENSE Datei
+  bestehen können und auch so gedacht sind.
+*** DONE Installation schreiben README                                  :doc:
+    :PROPERTIES:
+    :ID:       43f6df92-98de-4f60-b7bb-eccdd72cf4d2
+    :ARCHIVE_TIME: 2014-11-15 Sat 12:08
+    :END:
+*** DONE Öffentliche Funktionen dokumentieren
+    :PROPERTIES:
+    :ID:       c22ee059-40e4-417a-9e0f-1417fe3e13a0
+    :ARCHIVE_TIME: 2014-11-15 Sat 12:44
+    :END:
+*** DONE Getting started schreiben README                               :doc:
+    :PROPERTIES:
+    :ID:       cecc7d66-d3a4-4130-bbd4-082994c5e736
+    :ARCHIVE_TIME: 2014-11-15 Sat 13:08
+    :END:
+*** DONE :mode implementieren                                          :code:
+   :PROPERTIES:
+   :ID:       61cb7211-d5eb-4e57-bbd2-ca107026be7d
+   :ARCHIVE_TIME: 2014-11-15 Sat 13:35
+   :END:
+- [X] kann eine Liste sein, um mehrere modes zu matchen
+- [X] in [[id:9bbd887d-fc1c-4717-9171-af0c0a48d6bc][Backends]] dokumentieren
+*** DONE viewer in eigene Dateien verschieben                          :code:
+    :PROPERTIES:
+    :ID:       7b49a9b4-cdb1-4495-991d-37e29a5424f6
+    :ARCHIVE_TIME: 2014-11-15 Sat 13:35
+    :END:

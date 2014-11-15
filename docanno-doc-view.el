@@ -1,11 +1,11 @@
-;;; pdfc-doc-view.el --- doc-view viewer for pdfc.
+;;; docanno-doc-view.el --- doc-view viewer for docanno.
 
 ;; Copyright (C) 2014 Alexander Baier
 
 ;; Author: Alexander Baier <alexander.baier@mailbox.org>
 ;; Keywords: convenience
 ;; Version: 0.0.3
-;; Require-Package: ((pdfc "0.0.3"))
+;; Require-Package: ((docanno "0.0.3"))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -29,22 +29,22 @@
 ;;
 ;;; Code:
 
-(require 'pdfc)
+(require 'docanno)
 
-(defvar pdfc-doc-view--buffer-hash)
+(defvar docanno-doc-view--buffer-hash)
 
-(add-hook 'pdfc-viewer-hook
-          (defun pdfc-doc-view--setup ()
-            (set (make-local-variable 'pdfc-doc-view--buffer-hash)
+(add-hook 'docanno-viewer-hook
+          (defun docanno-doc-view--setup ()
+            (set (make-local-variable 'docanno-doc-view--buffer-hash)
                  (make-hash-table :test #'equal :size 10))))
 
-(defun pdfc-doc-view-display-cmd (file page)
-  (let ((pdf-buf (gethash file pdfc-doc-view--buffer-hash)))
+(defun docanno-doc-view-display-cmd (file page)
+  (let ((pdf-buf (gethash file docanno-doc-view--buffer-hash)))
     ;; If file is not yet in our hash table see if it is open in emacs
     ;; and if it is, put it into the table.
     (and (not pdf-buf)
          (setq pdf-buf (get-file-buffer file))
-         (puthash file pdf-buf pdfc-doc-view--buffer-hash))
+         (puthash file pdf-buf docanno-doc-view--buffer-hash))
     (if pdf-buf
         (with-selected-window
             (or (get-buffer-window pdf-buf)
@@ -54,12 +54,12 @@
       ;; file is not yet open in emacs.
       (let ((sw (selected-window)))
         (find-file-other-window file)
-        (puthash file (current-buffer) pdfc-doc-view--buffer-hash)
+        (puthash file (current-buffer) docanno-doc-view--buffer-hash)
         (select-window sw)))))
 
-(pdfc-define-viewer "doc-view-mode"
-  :display #'pdfc-doc-view-display-cmd)
+(docanno-define-viewer "doc-view-mode"
+  :display #'docanno-doc-view-display-cmd)
 
-(provide 'pdfc-doc-view)
+(provide 'docanno-doc-view)
 
-;;; pdfc-doc-view.el ends here
+;;; docanno-doc-view.el ends here

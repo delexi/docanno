@@ -1,43 +1,43 @@
 * Installation
 ** Installing from MELPA
-To install =pdfc= from MELPA, issue the following command:
-=package-install RET pdfc RET=
+To install =docanno= from MELPA, issue the following command:
+=package-install RET docanno RET=
 
 To find out more about MELPA visit http://melpa.org/#/getting-started.
 * Getting started
-At first, require =pdfc-mode= and the backends and viewers you want to
+At first, require =docanno-mode= and the backends and viewers you want to
 use.  Currently, org-mode is the only supported backend.  See [[Viewers]]
 and [[Backends]] for more information.
 
 #+BEGIN_SRC emacs-lisp
-  (require 'pdfc)
-  (require 'pdfc-org)
-  (require 'pdfc-doc-view)
+  (require 'docanno)
+  (require 'docanno-org)
+  (require 'docanno-doc-view)
 #+END_SRC
 
 Now set the default viewer you would like to use.
 
 #+BEGIN_SRC emacs-lisp
-  (setq-default pdfc--current-viewer "doc-view")
+  (setq-default docanno--current-viewer "doc-view")
 #+END_SRC 
 
-You can do the same with =pdfc--current-backend= to set the default
+You can do the same with =docanno--current-backend= to set the default
 backend.  Note, however, that a backend usually defines the =:mode=
 property that causes it to be automatically activated in the given
 modes.
 * Viewers
 A viewer is something that can display a given page in a document.
 This is the minimal requirement for something to be usable as a viewer
-by =pdfc.el=.  In order to support extra features a viewer may offer
-further functionality to =pdfc.el=.
+by =docanno.el=.  In order to support extra features a viewer may offer
+further functionality to =docanno.el=.
 
-Each viewer is configured as an element in the plist =pdfc-viewers=,
+Each viewer is configured as an element in the plist =docanno-viewers=,
 keyed by its name.  Each such element is in turn a plist with =:name=
 and =:display= as mandatory keywords.  All keywords are listed below.
 
 - =:name= 
   The name of the viewer.  Must be unique under all viewers in
-  =pdfc-viewers=.  This is also used in the user interface.
+  =docanno-viewers=.  This is also used in the user interface.
 - =:display=
   A command that displays a given page in a given document.
 - =:page=
@@ -51,7 +51,7 @@ and =:display= as mandatory keywords.  All keywords are listed below.
   A command that zooms out of the given document.
 
 A command is either a string or an elisp function.  For a more
-detailed documentation see the doc string of =pdfc-define-viewer=.
+detailed documentation see the doc string of =docanno-define-viewer=.
 
 * Backends
   :PROPERTIES:
@@ -59,7 +59,7 @@ detailed documentation see the doc string of =pdfc-define-viewer=.
   :END:
 A backend is a set of elisp functions that implement the actual note
 taking behaviour.  A new backend can be defined with the function
-=pdfc-define-backend=.  Said function takes several keywords that are
+=docanno-define-backend=.  Said function takes several keywords that are
 listed below.  Mandatory keywords are marked with an asterisk.
 
 - =:name=
