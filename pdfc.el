@@ -37,7 +37,7 @@
 (defvar pdfc--current-backend nil
   "The backend currently active.")
 
-(defvar pdfc--current-viewer "evince"
+(defvar pdfc--current-viewer nil
   "The viewer currently active.")
 
 (defvar pdfc--backends nil
