@@ -41,10 +41,10 @@
   "The viewer currently active.")
 
 (defvar pdfc--backends nil
-  "An alist representing the defined backends.")
+  "A plist representing the defined backends.")
 
 (defvar pdfc--viewers nil
-  "An alist representing the defined viewers.")
+  "A plist representing the defined viewers.")
 
 (defvar pdfc--current-page-num 1
   "The page of the document currently displayed.")
@@ -85,11 +85,13 @@
                  return (pdfc-set-backend backend)))))
 
 (defun pdfc-define-backend (name &rest keywords)
+  "Define a new backend accessible by NAME."
   (declare (indent defun))
   (setq pdfc--backends 
         (plist-put pdfc--backends name (plist-put keywords :name name))))
 
 (defun pdfc-define-viewer (name &rest keywords)
+  "Define the configuration for a new viewer accessible by NAME."
   (declare (indent defun))
   (setq pdfc--viewers
         (plist-put pdfc--viewers name (plist-put keywords :name name))))
@@ -102,15 +104,23 @@
 
 (defun pdfc--generic-get (default store error-label key &optional opt)
   (when (null store)
-    (user-error "No %s is activated. Activate it via pdfc-set-%s" error-label))
+    (user-error "No %s is activated. Activate one via pdfc-set-%s" error-label))
   (lax-plist-get (or (lax-plist-get store (or opt default))
                      (error "There is no %s defined by the name \"%s\""
                             error-label (or opt default))) key))
 
 (defun pdfc-backend-get (key &optional backend)
+  "Return the value of KEY in current backend.
+
+If BACKEND is a string it is used instead of the current backend.
+If no backend has been activated yet, throw a user-error."
   (pdfc--generic-get pdfc--current-backend pdfc--backends "backend" key backend))
 
 (defun pdfc-viewer-get (key &optional viewer)
+  "Return the value of KEY in current viewer.
+
+If VIEWER is a string it is used instead of the current viewer.
+If no viewer has been activated yet, throw a user-error."
   (pdfc--generic-get pdfc--current-viewer pdfc--viewers "viewer" key viewer))
 
 (defvar pdfc-backend-hook nil
@@ -119,7 +129,10 @@
   "This hook is run after changing the current viewer.")
 
 (defun pdfc-set-viewer (viewer)
-  "Activate a viewer."
+  "Make VIEWER the current viewer.
+
+When called interatively, completion over the currently activated
+viewers is available."
   (interactive (list (completing-read
                       "Select a viewer: "
                       (cl-loop for v in pdfc--viewers by #'cddr collect v))))
@@ -127,7 +140,10 @@
   (run-hooks 'pdfc-viewer-hook))
 
 (defun pdfc-set-backend (backend)
-  "Activate a backend."
+  "Make BACKEND the current backend.
+
+When called interatively, completion over the currently activated
+backends is available."
   (interactive (list (completing-read
                       "Select a backend: "
                       (cl-loop for b in pdfc--backends by #'cddr collect b))))
@@ -135,7 +151,11 @@
   (run-hooks 'pdfc-backend-hook))
 
 (defun pdfc-set-file-name (file &optional no-guess)
-  ""
+  "Make FILE the current file.
+
+When called interactively, completion over files returned by the
+backend property :file-name is available.
+With universal argument there is no such completion."
   (interactive
    (list (if (equal current-prefix-arg '(4))
              (let (insert-default-directory)
@@ -156,7 +176,7 @@
     (setq pdfc--current-file-name (expand-file-name file))))
 
 (defun pdfc--maybe-change-file-name ()
-  "Call `pdfc-guess-file-paths-function' to set `pdfc--current-file-name'.
+  "Use the backend property :file-name to set `pdfc--current-file-name'.
 
 Calls `pdfc-set-file-name' with the first file name returned by
 backend property :file-name if it is non-nil and is not the
@@ -175,6 +195,7 @@ Does nothing if `pdfc-auto-update-file-path' is nil."
          (user-error "\"%s\" does not exist" pdfc--current-file-name))))
 
 (defun pdfc-display-pdf (&optional page)
+  "Display the current document at PAGE."
   (interactive "p")
   (pdfc--check-file-name)
   (when page (setq pdfc--current-page-num page))
@@ -197,11 +218,17 @@ Does nothing if `pdfc-auto-update-file-path' is nil."
                  command))
 
 (defun pdfc-previous-page (&optional count)
+  "Display previous page of current document.
+
+If COUNT is given, go back COUNT pages."
   (interactive "p")
   (pdfc--maybe-change-file-name)
   (pdfc-display-pdf (- pdfc--current-page-num (or count 1))))
 
 (defun pdfc-next-page (&optional count)
+  "Display next page of current document.
+
+If COUNT is given, go forward COUNT pages."
   (interactive "p")
   (pdfc--maybe-change-file-name)
   (pdfc-display-pdf (+ pdfc--current-page-num (or count 1))))
@@ -224,7 +251,7 @@ Does nothing if `pdfc-auto-update-file-path' is nil."
           (t (error ":new-note must either be a string or a function")))))
 
 (defun pdfc-insert-note-and-page ()
-  "Insert a new note and then a new page at point."
+  "Insert a new note and the current page at point."
   (interactive)
   (pdfc-insert-note)
   (pdfc-insert-page)
