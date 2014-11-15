@@ -1,3 +1,9 @@
+* Installation
+** Installing from MELPA
+To install =pdfc= from MELPA, issue the following command:
+=package-install RET pdfc RET=
+
+To find out more about MELPA visit http://melpa.org/#/getting-started.
 * Viewers
 A viewer is something that can display a given page in a document.
 This is the minimal requirement for something to be usable as a
