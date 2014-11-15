@@ -74,7 +74,7 @@
 (defvar docanno--page-num-hash nil)
 
 ;;;###autoload
-(define-minor-mode docanno-mode "Control pdf programs from within emacs."
+(define-minor-mode docanno-mode "Control and annotate documents from emacs."
   nil "Docanno" docanno-mode-map
   (if docanno-mode
       (progn
@@ -161,7 +161,7 @@ With universal argument there is no such completion."
    (list (if (equal current-prefix-arg '(4))
              (let (insert-default-directory)
                (read-file-name
-                "Find PDF file to control: " nil nil t nil
+                "Find document file to control: " nil nil t nil
                 (lambda (f) 
                   (or (file-directory-p f)
                       (cl-some (lambda (suffix)
@@ -169,7 +169,7 @@ With universal argument there is no such completion."
                                docanno-file-suffixes)))))
            (let ((guesses (funcall (docanno-backend-get :file-name))))
              (completing-read 
-              "Select PDF to control: "
+              "Select document to control: "
               guesses nil 'confirm nil nil guesses)))
          current-prefix-arg))
   (when (file-exists-p file)
