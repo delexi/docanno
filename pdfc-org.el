@@ -78,7 +78,7 @@ following note.")
   :separator #'pdfc-org-get-separator
   :new-note #'pdfc-org-insert-heading
   :file-name #'pdfc-org-guess-file-paths
-  :mode 'org-mode)
+  :mode '(org-mode))
 
 (provide 'pdfc-org)
 

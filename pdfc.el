@@ -81,7 +81,7 @@
         (set (make-local-variable 'pdfc--page-num-hash)
              (make-hash-table :test #'equal :size 10))
         (cl-loop for backend in pdfc--backends by #'cddr
-                 when (eql (pdfc-backend-get :mode backend) major-mode)
+                 when (member major-mode (pdfc-backend-get :mode backend))
                  return (pdfc-set-backend backend)))))
 
 (defun pdfc-define-backend (name &rest keywords)
