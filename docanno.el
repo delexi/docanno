@@ -1,4 +1,4 @@
-;;; docanno.el --- Control pdf programs from within emacs.
+;;; docanno.el --- Control and annotate documents from emacs.
 
 ;; Copyright (C) 2014 Alexander Baier
 
@@ -56,14 +56,14 @@
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C-c M-n") 'docanno-next-page)
     (define-key map (kbd "C-c M-p") 'docanno-previous-page)
-    (define-key map (kbd "C-c M-d") 'docanno-display-pdf)
+    (define-key map (kbd "C-c M-d") 'docanno-display-doc)
     (define-key map (kbd "C-c M-v") 'docanno-set-viewer)
     (define-key map (kbd "C-c M-f") 'docanno-set-file-name)
     (define-key map (kbd "C-c i") 'docanno-insert-page)
     (define-key map (kbd "C-c M-i") 'docanno-insert-note-and-page)
     map))
 
-(defvar docanno-command-hook nil
+(defvar docanno-viewer-hook nil
   "Runs after every invocation of the pdf command.")
 
 (defvar docanno-auto-update-file-path t)
@@ -121,9 +121,10 @@ If VIEWER is a string it is used instead of the current viewer.
 If no viewer has been activated yet, throw a user-error."
   (docanno--generic-get docanno--current-viewer docanno--viewers "viewer" key viewer))
 
-(defvar docanno-backend-hook nil
+(defvar docanno-backend-change-hook nil
   "This hook is run after changing the current backend.")
-(defvar docanno-viewer-hook nil
+
+(defvar docanno-viewer-change-hook nil
   "This hook is run after changing the current viewer.")
 
 ;;;###autoload
@@ -136,7 +137,7 @@ viewers is available."
                       "Select a viewer: "
                       (cl-loop for v in docanno--viewers by #'cddr collect v))))
   (setq docanno--current-viewer viewer)
-  (run-hooks 'docanno-viewer-hook))
+  (run-hooks 'docanno-viewer-change-hook))
 
 ;;;###autoload
 (defun docanno-set-backend (backend)
@@ -148,7 +149,7 @@ backends is available."
                       "Select a backend: "
                       (cl-loop for b in docanno--backends by #'cddr collect b))))
   (setq docanno--current-backend backend)
-  (run-hooks 'docanno-backend-hook))
+  (run-hooks 'docanno-backend-change-hook))
 
 ;;;###autoload
 (defun docanno-set-file-name (file &optional no-guess)
@@ -199,7 +200,7 @@ Does nothing if `docanno-auto-update-file-path' is nil."
          (user-error "\"%s\" does not exist" docanno--current-file-name))))
 
 ;;;###autoload
-(defun docanno-display-pdf (&optional page)
+(defun docanno-display-doc (&optional page)
   "Display the current document at PAGE."
   (interactive "p")
   (docanno--check-file-name)
@@ -229,7 +230,7 @@ Does nothing if `docanno-auto-update-file-path' is nil."
 If COUNT is given, go back COUNT pages."
   (interactive "p")
   (docanno--maybe-change-file-name)
-  (docanno-display-pdf (- docanno--current-page-num (or count 1))))
+  (docanno-display-doc (- docanno--current-page-num (or count 1))))
 
 ;;;###autoload
 (defun docanno-next-page (&optional count)
@@ -238,7 +239,7 @@ If COUNT is given, go back COUNT pages."
 If COUNT is given, go forward COUNT pages."
   (interactive "p")
   (docanno--maybe-change-file-name)
-  (docanno-display-pdf (+ docanno--current-page-num (or count 1))))
+  (docanno-display-doc (+ docanno--current-page-num (or count 1))))
 
 ;;;###autoload
 (defun docanno-insert-page ()
