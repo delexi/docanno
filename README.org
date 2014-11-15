@@ -4,6 +4,27 @@ To install =pdfc= from MELPA, issue the following command:
 =package-install RET pdfc RET=
 
 To find out more about MELPA visit http://melpa.org/#/getting-started.
+* Getting started
+At first, require =pdfc-mode= and the backends and viewers you want to
+use.  Currently, org-mode is the only supported backend.  See [[Viewers]]
+and [[Backends]] for more information.
+
+#+BEGIN_SRC emacs-lisp
+  (require 'pdfc)
+  (require 'pdfc-org)
+  (require 'pdfc-doc-view)
+#+END_SRC
+
+Now set the default viewer you would like to use.
+
+#+BEGIN_SRC emacs-lisp
+  (setq-default pdfc--current-viewer "doc-view")
+#+END_SRC 
+
+You can do the same with =pdfc--current-backend= to set the default
+backend.  Note, however, that a backend usually defines the =:mode=
+property that causes it to be automatically activated in the given
+modes.
 * Viewers
 A viewer is something that can display a given page in a document.
 This is the minimal requirement for something to be usable as a
@@ -32,6 +53,9 @@ A command is either a string or an elisp function.  For a more
 detailed documentation see the doc string of =pdfc-viewers=.
 
 * Backends
+  :PROPERTIES:
+  :ID:       9bbd887d-fc1c-4717-9171-af0c0a48d6bc
+  :END:
 A backend is a set of elisp functions that implement the actual note
 taking behaviour.  A new backend can be defined with the function
 =pdfc-define-backend=.  Said function takes several keywords that are
