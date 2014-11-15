@@ -68,6 +68,9 @@
 
 (defvar docanno-auto-update-file-path t)
 
+(defvar docanno-file-suffixes '(".pdf" ".ps")
+  "File suffixes shown in `docanno-set-file-name' completion.")
+
 (defvar docanno--page-num-hash nil)
 
 ;;;###autoload
@@ -159,8 +162,11 @@ With universal argument there is no such completion."
              (let (insert-default-directory)
                (read-file-name
                 "Find PDF file to control: " nil nil t nil
-                (lambda (f) (or (file-directory-p f)
-                           (string-suffix-p ".pdf" f t)))))
+                (lambda (f) 
+                  (or (file-directory-p f)
+                      (cl-some (lambda (suffix)
+                                 (string-suffix-p suffix f 'ignore-case))
+                               docanno-file-suffixes)))))
            (let ((guesses (funcall (docanno-backend-get :file-name))))
              (completing-read 
               "Select PDF to control: "
