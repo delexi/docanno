@@ -96,12 +96,6 @@
   (setq pdfc--viewers
         (plist-put pdfc--viewers name (plist-put keywords :name name))))
 
-(pdfc-define-viewer "evince"
-  :display "/usr/bin/evince -i %p %f")
-
-(pdfc-define-viewer "okular"
-  :display "/usr/bin/okular --noraise --unique -p %p %f")
-
 (defun pdfc--generic-get (default store error-label key &optional opt)
   (when (null store)
     (user-error "No %s is activated. Activate one via pdfc-set-%s" error-label))
