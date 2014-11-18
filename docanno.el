@@ -34,10 +34,10 @@
 (require 's)
 (require 'cl)
 
-(defvar docanno--current-backend nil
+(defvar-local docanno--current-backend nil
   "The backend currently active.")
 
-(defvar docanno--current-viewer nil
+(defvar-local docanno--current-viewer nil
   "The viewer currently active.")
 
 (defvar docanno--backends nil
@@ -46,10 +46,10 @@
 (defvar docanno--viewers nil
   "A plist representing the defined viewers.")
 
-(defvar docanno--current-page-num 1
+(defvar-local docanno--current-page-num 1
   "The page of the document currently displayed.")
 
-(defvar docanno--current-file-name nil
+(defvar-local docanno--current-file-name nil
   "The file name of the document currently displayed.")
 
 (defvar docanno-mode-map
@@ -64,26 +64,21 @@
     map))
 
 (defvar docanno-viewer-hook nil
-  "Runs after every invocation of the pdf command.")
+  "Runs after every invocation of a viewer command.")
 
 (defvar docanno-auto-update-file-path t)
 
 (defvar docanno-file-suffixes '(".pdf" ".ps")
   "File suffixes shown in `docanno-set-file-name' completion.")
 
-(defvar docanno--page-num-hash nil)
+(defvar-local docanno--page-num-hash nil)
 
 ;;;###autoload
 (define-minor-mode docanno-mode "Control and annotate documents from emacs."
   nil "Docanno" docanno-mode-map
   (if docanno-mode
       (progn
-        (make-local-variable 'docanno--current-backend)
-        (make-local-variable 'docanno--current-viewer)
-        (make-local-variable 'docanno--current-page-num)
-        (make-local-variable 'docanno--current-file-name)
-        (set (make-local-variable 'docanno--page-num-hash)
-             (make-hash-table :test #'equal :size 10))
+        (setq docann--page-num-hash (make-hash-table :test #'equal :size 10))
         (cl-loop for backend in docanno--backends by #'cddr
                  when (member major-mode (docanno-backend-get :mode backend))
                  return (docanno-set-backend backend)))))
