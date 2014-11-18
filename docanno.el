@@ -34,6 +34,43 @@
 (require 's)
 (require 'cl)
 
+(defgroup docanno nil
+  "Customizations for the annotation mode docanno."
+  :package-version '(docanno . "0.0.3")
+  :prefix "docanno")
+
+(defcustom docanno-auto-update-file-path t
+  "Infer the current document path from the context.
+
+If this option is non-nil the current backend is asked for the
+file to operate on before every single viewer command is
+executed.  Backends can use this to spare the user from manually
+changing the document path."
+  :type 'boolean
+  :group 'docanno
+  :package-version '(docanno . "0.0.3"))
+
+(defcustom docanno-file-suffixes '(".pdf" ".ps")
+  "File suffixes shown in `docanno-set-file-name' completion."
+  :type '(repeat string)
+  :group 'docanno
+  :package-version '(docanno . "0.0.3"))
+
+(defcustom docanno-backend-change-hook nil
+  "This hook is run after changing the current backend."
+  :type 'hook
+  :package-version '(docanno . "0.0.3"))
+
+(defcustom docanno-viewer-change-hook nil
+  "This hook is run after changing the current viewer."
+  :type 'hook
+  :package-version '(docanno . "0.0.3"))
+
+(defcustom docanno-viewer-hook nil
+  "Runs after every invocation of a viewer command."
+  :type 'hook
+  :package-version '(docanno . "0.0.3"))
+
 (defvar-local docanno--current-backend nil
   "The backend currently active.")
 
@@ -62,14 +99,6 @@
     (define-key map (kbd "C-c i") 'docanno-insert-page)
     (define-key map (kbd "C-c M-i") 'docanno-insert-note-and-page)
     map))
-
-(defvar docanno-viewer-hook nil
-  "Runs after every invocation of a viewer command.")
-
-(defvar docanno-auto-update-file-path t)
-
-(defvar docanno-file-suffixes '(".pdf" ".ps")
-  "File suffixes shown in `docanno-set-file-name' completion.")
 
 (defvar-local docanno--page-num-hash nil)
 
@@ -115,12 +144,6 @@ If no backend has been activated yet, throw a user-error."
 If VIEWER is a string it is used instead of the current viewer.
 If no viewer has been activated yet, throw a user-error."
   (docanno--generic-get docanno--current-viewer docanno--viewers "viewer" key viewer))
-
-(defvar docanno-backend-change-hook nil
-  "This hook is run after changing the current backend.")
-
-(defvar docanno-viewer-change-hook nil
-  "This hook is run after changing the current viewer.")
 
 ;;;###autoload
 (defun docanno-set-viewer (viewer)
