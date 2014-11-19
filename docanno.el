@@ -71,11 +71,17 @@ changing the document path."
   :type 'hook
   :package-version '(docanno . "0.0.3"))
 
-(defvar-local docanno--current-backend nil
-  "The backend currently active.")
+(defcustom docanno--current-backend "org-mode"
+  "The backend currently active."
+  :tag "Default Docanno Backend"
+  :type 'string
+  :package-version '(docanno . "0.0.3"))
 
-(defvar-local docanno--current-viewer nil
-  "The viewer currently active.")
+(defcustom docanno--current-viewer "doc-view"
+  "The viewer currently active."
+  :tag "Default Docanno Viewer"
+  :type 'string
+  :package-version '(docanno . "0.0.3"))
 
 (defvar docanno--backends nil
   "A plist representing the defined backends.")
@@ -107,6 +113,8 @@ changing the document path."
   nil "Docanno" docanno-mode-map
   (if docanno-mode
       (progn
+        (make-variable-buffer-local 'docanno--current-backend)
+        (make-variable-buffer-local 'docanno--current-viewer)
         (setq docann--page-num-hash (make-hash-table :test #'equal :size 10))
         (cl-loop for backend in docanno--backends by #'cddr
                  when (member major-mode (docanno-backend-get :mode backend))
