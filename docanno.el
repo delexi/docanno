@@ -59,11 +59,13 @@ changing the document path."
 (defcustom docanno-backend-change-hook nil
   "This hook is run after changing the current backend."
   :type 'hook
+  :group 'docanno
   :package-version '(docanno . "0.0.3"))
 
 (defcustom docanno-viewer-change-hook nil
   "This hook is run after changing the current viewer."
   :type 'hook
+  :group :docanno
   :package-version '(docanno . "0.0.3"))
 
 (defcustom docanno-viewer-hook nil
@@ -240,7 +242,7 @@ Does nothing if `docanno-auto-update-file-path' is nil."
        display-cmd (get-buffer-create " *docanno-display-process*")
        (docanno--replace-placeholder display-cmd docanno--current-page-num)))
      (t (user-error "The value of `docanno-command-alist' is not correct"))))
-  (run-hooks 'docanno-command-hook))
+  (run-hooks 'docanno-viewer-hook))
 
 (defun docanno--replace-placeholder (command page)
   (s-replace-all `(("%f" . ,(replace-quote
