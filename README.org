@@ -25,6 +25,15 @@ You can do the same with =docanno--current-backend= to set the default
 backend.  Note, however, that a backend usually defines the =:mode=
 property that causes it to be automatically activated in the given
 modes.
+
+All user facing variables can also be configured via the Customize
+interface.
+
+** Org mode backend
+Open an org file of your choosing and insert the property given via
+=docanno-org-doc-property= either at the top of the file or for a
+specific subtree.  Finally do =M-x docanno-mode RET= to activate
+docanno.
 * Contributing
 The repository for this project is hosted on [[https://github.com/delexi/docanno][Github]].  If you want to
 contribute source code or documentation you are welcome to either mail
