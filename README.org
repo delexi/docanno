@@ -36,8 +36,8 @@ specific subtree.  Finally do =M-x docanno-mode RET= to activate
 docanno.
 * Contributing
 The repository for this project is hosted on [[https://github.com/delexi/docanno][Github]].  If you want to
-contribute source code or documentation you are welcome to either mail
-me a patch or to fork this repository on Github and send me a pull
+contribute source code or documentation you are welcome to either [[mailto:alexander.baier@mailbox.org][mail]]
+me a patch or fork this repository on Github and send me a pull
 request.
 * Viewers
 A viewer is something that can display a given page in a document.
