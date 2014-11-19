@@ -27,17 +27,24 @@
 
 (require 'docanno)
 
-(defvar docanno-org-page-note-separators '((headline . ": ")
-                                        (item . " :: "))
+(defcustom docanno-org-page-note-separators '((headline . ": ")
+                                              (item . " :: "))
   "The strings used to separate the page number and the note.
 
 Each element in this alist looks like \(TYPE . SEPARATOR).
-TYPE is one of headline or item symbolizing a note as a
+TYPE is one of headline or item symbolizing either a note as a
 headline or an item in a list.
 SEPARATOR is the string used to separate the page number and the
-following note.")
+following note."
+  :type '(alist :key-type symbol :value-type string)
+  :group 'docanno
+  :package-version '(docanno . "0.0.3"))
 
-(defvar docanno-org-doc-property "DOCANNO_FILE")
+(defcustom docanno-org-doc-property "DOCANNO_FILE"
+  "The name of the property used for detecting the document name."
+  :type 'string
+  :group 'docanno
+  :package-version '(docanno . "0.0.3"))
 
 (defun docanno-org-extract-page ()
   (save-excursion
