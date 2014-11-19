@@ -27,7 +27,7 @@
 ;; Control a PDF reader from inside emacs.
 ;; - goto previous/next page
 ;; - goto a certain page
-;; - insert org headline/list item/table entry with page number
+;; - insert org headline or list item entry with page number
 ;;
 ;;; Code:
 
